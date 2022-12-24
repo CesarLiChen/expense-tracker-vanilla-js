@@ -8,6 +8,17 @@ class ExpenseController {
 		console.log("controller obj has been created");
 		this.DOM = view.getDOM();
 		this.model = model;
+
+		/*
+			We do below because:
+			we want addExpense() to get the ExpenseController object, 
+			without line below it will get the 'form' object with id
+			new-expense-form.
+		*/
+		this.addExpense = this.addExpense.bind(this);
+		
+		console.log(this);
+
 		this.setUpEventHandlers();
 	}
 
@@ -45,6 +56,8 @@ class ExpenseController {
 			amount: {value: am}
 		} = form;
 		console.log(desc, dat, am);
+
+		console.log(this);
 
 		this.model.addExpense({
 			description: desc,

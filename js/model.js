@@ -5,6 +5,7 @@
 
 class ExpenseModel {
 	constructor() {
+		console.log("model obj has been created");
 		this.expenses = [];
 	}
 
