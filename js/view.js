@@ -34,17 +34,31 @@ class ExpenseView {
 
 		this.DOM.expenses.innerHTML = "";
 
-		// Template strings.
+		
 		this.model.all().forEach( (expense) => {
+			// Template strings, new on ES6. Creates html.
+
+			const description = this.makeExpenseField(expense.description);
+			const date = this.makeExpenseField(expense.date);
+			const amount = this.makeExpenseField("$" + expense.amount);
+
 			const expenseRow = `
 				<div class="expense">
-					<div class="field"> 
-						<h2>${expense.description}</h2>
-					</div>
+					${description}
+					${date}
+					${amount}
 				</div>
 			`;
 
 			this.DOM.expenses.innerHTML += expenseRow;
 		});
+	}
+
+	makeExpenseField(value) {
+		return `
+			<div class="field"> 
+				<h2>${value}</h2>
+			</div>
+		`;
 	}
 }
