@@ -10,6 +10,19 @@ class ExpenseModel {
 		this.subscribers = [];
 	}
 
+	all() {
+
+		/*
+			NOT: return this.expenses;
+			We do not want to return the array as is since others
+			can change things in it.
+
+			ES6, spread operator. Creates a copy of the array so
+			client doesn't have access to original one.
+		*/
+		return [...this.expenses];
+	}
+
 	addExpense(expense) {
 		this.expenses.push(expense);
 

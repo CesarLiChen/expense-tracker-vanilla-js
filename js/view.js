@@ -17,6 +17,7 @@ class ExpenseView {
 	selectDOMElements() {
 		return {
 			expenseForm: document.getElementById("new-expense-form"),
+			expenses: document.getElementById("expenses"),
 		};
 	}
 
@@ -30,5 +31,20 @@ class ExpenseView {
 
 	notify() {
 		console.log("Model has been updated");
+
+		this.DOM.expenses.innerHTML = "";
+
+		// Template strings.
+		this.model.all().forEach( (expense) => {
+			const expenseRow = `
+				<div class="expense">
+					<div class="field"> 
+						<h2>${expense.description}</h2>
+					</div>
+				</div>
+			`;
+
+			this.DOM.expenses.innerHTML += expenseRow;
+		});
 	}
 }
