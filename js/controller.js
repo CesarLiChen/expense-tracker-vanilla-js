@@ -21,7 +21,9 @@ class ExpenseController {
 		event.preventDefault();
 
 		const form = event.currentTarget; //instead of event.target
+		console.log(form);
 
+		/* --------Old way----------
 		const description = form.description.value;
 		const date = form.date.value;
 		const amount = form.amount.value;
@@ -29,6 +31,19 @@ class ExpenseController {
 		console.log(description, date, amount);
 		console.log("Gets html element " + form.description);
 		console.log("Gets actual value " + form.description.value);
-		console.log(form);
+		*/
+
+		/* 
+			New to ES6, another way to extract
+			form values.
+			description: {value: desc},
+			desc = form.description.value;
+		*/
+		const {
+			description: {value: desc},
+			date: {value: dat},
+			amount: {value: am}
+		} = form;
+		console.log(desc, dat, am);
 	}
 }
