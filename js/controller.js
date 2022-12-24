@@ -4,10 +4,10 @@
 */
 
 class ExpenseController {
-	constructor(view) {
+	constructor(view, model) {
 		console.log("controller obj has been created");
 		this.DOM = view.getDOM();
-
+		this.model = model;
 		this.setUpEventHandlers();
 	}
 
@@ -45,5 +45,11 @@ class ExpenseController {
 			amount: {value: am}
 		} = form;
 		console.log(desc, dat, am);
+
+		this.model.addExpense({
+			description: desc,
+			date: dat,
+			amount: am
+		});
 	}
 }
