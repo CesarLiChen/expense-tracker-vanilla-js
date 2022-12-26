@@ -4,10 +4,12 @@
 */
 
 class ExpenseModel {
-	constructor() {
+	constructor(db) {
 		console.log("model obj has been created");
-		this.expenses = [];
+		this.expenses = db.all();
 		this.subscribers = [];
+
+		this.db = db;
 	}
 
 	all() {
@@ -33,5 +35,7 @@ class ExpenseModel {
 
 	subscribe(subscriber) {
 		this.subscribers.push(subscriber);
+
+		subscriber.notify();
 	}
 }

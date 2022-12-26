@@ -7,7 +7,8 @@ console.log("app.js loaded");
 	model before view, both before controller.
 	'view' needs to know about 'model'.
 */
-const model = new ExpenseModel();
+const db = new DB();
+const model = new ExpenseModel(db);
 const view = new ExpenseView(model);
 const controller = new ExpenseController(view, model);
 
