@@ -6,7 +6,7 @@
 class ExpenseModel {
 	constructor(db) {
 		console.log("model obj has been created");
-		this.expenses = db.all();
+		this.expenses = db.all(); //this.expenses = []; <- Before
 		this.subscribers = [];
 
 		this.db = db;
@@ -16,7 +16,7 @@ class ExpenseModel {
 
 		/*
 			NOT: return this.expenses;
-			We do not want to return the array as is since others
+			We do not want to return the array "as is" since others
 			can change things in it.
 
 			ES6, spread operator. Creates a copy of the array so
@@ -26,7 +26,10 @@ class ExpenseModel {
 	}
 
 	addExpense(expense) {
+		expense.id = this.generateId();
+
 		this.expenses.push(expense);
+		this.db.add(expense);
 
 		this.subscribers.forEach( (subscriber) => {
 			subscriber.notify();
@@ -37,5 +40,12 @@ class ExpenseModel {
 		this.subscribers.push(subscriber);
 
 		subscriber.notify();
+	}
+
+	generateId() {
+		// Each unique ID will be a timestamp.
+		const timestamp = new Date().getTime();
+
+		return JSON.stringify(timestamp);
 	}
 }

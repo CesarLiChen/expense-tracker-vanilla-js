@@ -1,11 +1,25 @@
+/*
+	Using localStorage for persistence.
+	A key-value store.
+	E.g.
+	localStorage.setItem("name", "Clakr");
+	localStorage.getItem("name"); <-Should return Clakr between refreshes
+	localStorage.removeItem("name");
+*/
+
 class DB {
 	all() {
-		return [
-			{
-				description: "Groceries (dummy data)",
-				date: "2022/12/25",
-				amount: "20.99"
-			}
-		];
+		const expenses = [];
+
+		for (let key in localStorage) {
+			const expense = JSON.parse(localStorage.getItem(key));
+
+			expenses.push(expense);
+		}
+		return expenses;
 	}	
+
+	add(expense) {
+		localStorage.setItem(expense.id, JSON.stringify(expense));
+	}
 }
