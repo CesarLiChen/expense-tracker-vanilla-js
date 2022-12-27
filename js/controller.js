@@ -16,6 +16,7 @@ class ExpenseController {
 			new-expense-form.
 		*/
 		this.addExpense = this.addExpense.bind(this);
+		this.removeExpense = this.removeExpense.bind(this);
 		
 		console.log(this);
 
@@ -24,6 +25,13 @@ class ExpenseController {
 
 	setUpEventHandlers() {
 		this.DOM.expenseForm.addEventListener("submit", this.addExpense);
+
+		// getElementsByClassName returns a 'node' list
+		// Convert node to array by [... {node list}]
+		// Arrays have forEach method, node list's don't
+		[...this.DOM.deleteButtons].forEach( (deleteButton) => {
+			deleteButton.addEventListener("click", this.removeExpense);
+		});
 	}
 
 	// some people named it 'e', 'evt'
@@ -66,5 +74,9 @@ class ExpenseController {
 			date: dat,
 			amount: am
 		});
+	}
+
+	removeExpense() {
+		console.log('we deleted expense');
 	}
 }
