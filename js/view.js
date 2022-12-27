@@ -33,7 +33,6 @@ class ExpenseView {
 		console.log("Model has been updated");
 
 		this.DOM.expenses.innerHTML = "";
-
 		
 		this.model.all().forEach( (expense) => {
 			// Template strings, new on ES6. Creates html.

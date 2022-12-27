@@ -38,7 +38,7 @@ class ExpenseModel {
 
 	subscribe(subscriber) {
 		this.subscribers.push(subscriber);
-
+		
 		subscriber.notify();
 	}
 

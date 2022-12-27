@@ -28,11 +28,11 @@ class ExpenseController {
 
 	// some people named it 'e', 'evt'
 	addExpense(event) {
+
 		// Prevent default so it doesn't refresh page.
 		event.preventDefault();
 
 		const form = event.currentTarget; //instead of event.target
-		console.log(form);
 
 		/* --------Old way----------
 		const description = form.description.value;
@@ -43,6 +43,8 @@ class ExpenseController {
 		console.log("Gets html element " + form.description);
 		console.log("Gets actual value " + form.description.value);
 		*/
+
+		// ---------------------------------------------------------
 
 		/* 
 			New to ES6, another way to extract
