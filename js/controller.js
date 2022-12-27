@@ -32,6 +32,10 @@ class ExpenseController {
 		[...this.DOM.deleteButtons].forEach( (deleteButton) => {
 			deleteButton.addEventListener("click", this.removeExpense);
 		});
+
+		[...this.DOM.editButtons].forEach( (editButton) => {
+			editButton.addEventListener("click", this.setExpenseEditable);
+		});
 	}
 
 	// some people named it 'e', 'evt'
@@ -83,5 +87,12 @@ class ExpenseController {
 
 		console.log(expenseID);
 		this.model.removeExpense(expenseID);
+	}
+
+	setExpenseEditable(event) {
+		const button = event.currentTarget;
+		const expenseID = button.attributes["data-id"].value;
+
+		console.log(expenseID + " EDITABLE");
 	}
 }
