@@ -76,7 +76,12 @@ class ExpenseController {
 		});
 	}
 
-	removeExpense() {
+	removeExpense(event) {
 		console.log('we deleted expense');
+		const button = event.currentTarget;
+		const expenseID = button.attributes["data-id"].value;
+
+		console.log(expenseID);
+		this.model.removeExpense(expenseID);
 	}
 }

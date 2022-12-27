@@ -31,14 +31,25 @@ class ExpenseModel {
 		this.expenses.push(expense);
 		this.db.add(expense);
 
-		this.subscribers.forEach( (subscriber) => {
-			subscriber.notify();
+		this.notify();
+	}
+
+	removeExpense(expenseID) {
+		/* Filter loops through array returns every element
+		where a specific function returns TRUE.
+		Pretty much creates a new array WITHOUT the expense
+		removed and assigns it to the same array name.*/
+		this.expenses = this.expenses.filter( (expense) => {
+			return expense.id !== expenseID;
 		});
+		this.db.remove(expenseID);
+
+		this.notify();
 	}
 
 	subscribe(subscriber) {
 		this.subscribers.push(subscriber);
-		
+
 		subscriber.notify();
 	}
 
@@ -47,5 +58,11 @@ class ExpenseModel {
 		const timestamp = new Date().getTime();
 
 		return JSON.stringify(timestamp);
+	}
+
+	notify() {
+		this.subscribers.forEach( (subscriber) => {
+			subscriber.notify();
+		});
 	}
 }
