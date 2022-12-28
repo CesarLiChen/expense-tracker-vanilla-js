@@ -6,6 +6,7 @@ class ExpenseView {
 		console.log("A new ExpenseView obj has been created");
 		this.DOM = this.selectDOMElements();
 		this.model = model;
+		this.editableExpenses = new Set();
 
 		/*
 			I'm subscribed to your changes, so whenever there are changes
@@ -31,38 +32,20 @@ class ExpenseView {
 		return Object.assign({}, this.DOM);
 	}
 
+	setExpenseEditable(expenseID) {
+		this.editableExpenses.add(expenseID);
+		this.notify();
+	}
+
 	notify() {
 		console.log("Model has been updated");
 
 		this.DOM.expenses.innerHTML = "";
 		
 		this.model.all().forEach( (expense) => {
-
-			const description = this.makeExpenseField(expense.description);
-			const date = this.makeExpenseField(expense.date);
-			const amount = this.makeExpenseField("$" + expense.amount);
-
-			// Template strings, new on ES6. Creates html.
-			// Variable syntax: ${}
-			const expenseRow = `
-				<div class="expense">
-					${description}
-					${date}
-					${amount}
-
-					<div class="actions">
-						<button class="edit" data-id="${expense.id}">
-							Edit
-						</button>
-
-						<button class="delete" data-id="${expense.id}">
-							Delete
-						</button>
-					</div>
-				</div>
-			`;
-
-			this.DOM.expenses.innerHTML += expenseRow;
+			this.DOM.expenses.innerHTML += (this.editableExpenses.has(expense.id))
+										? this.makeExpenseEditRow(expense)
+										: this.makeExpenseDisplayRow(expense);
 		});
 	}
 
@@ -70,6 +53,40 @@ class ExpenseView {
 		return `
 			<div class="field"> 
 				<h2>${value}</h2>
+			</div>
+		`;
+	}
+
+	makeExpenseEditRow(expense) {
+		return  `
+			<div class="expense">
+				Being edited
+			</div>
+		`;
+	}
+
+	makeExpenseDisplayRow(expense) {
+		const description = this.makeExpenseField(expense.description);
+		const date = this.makeExpenseField(expense.date);
+		const amount = this.makeExpenseField("$" + expense.amount);
+
+		// Template strings, new on ES6. Creates html.
+		// Variable syntax: ${}
+		return `
+			<div class="expense">
+				${description}
+				${date}
+				${amount}
+
+				<div class="actions">
+					<button class="edit" data-id="${expense.id}">
+						Edit
+					</button>
+
+					<button class="delete" data-id="${expense.id}">
+						Delete
+					</button>
+				</div>
 			</div>
 		`;
 	}

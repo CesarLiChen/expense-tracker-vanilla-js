@@ -8,6 +8,7 @@ class ExpenseController {
 		console.log("controller obj has been created");
 		this.DOM = view.getDOM();
 		this.model = model;
+		this.view = view;
 
 		/*
 			We do below because:
@@ -17,6 +18,7 @@ class ExpenseController {
 		*/
 		this.addExpense = this.addExpense.bind(this);
 		this.removeExpense = this.removeExpense.bind(this);
+		this.setExpenseEditable = this.setExpenseEditable.bind(this);
 		
 		console.log(this);
 
@@ -94,5 +96,7 @@ class ExpenseController {
 		const expenseID = button.attributes["data-id"].value;
 
 		console.log(expenseID + " EDITABLE");
+
+		this.view.setExpenseEditable(expenseID);
 	}
 }
