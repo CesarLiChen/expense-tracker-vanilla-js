@@ -22,8 +22,7 @@ class ExpenseController {
 		this.unsetExpenseEditable = this.unsetExpenseEditable.bind(this);
 		
 		console.log(this);
-
-		this.setUpEventHandlers();
+		this.model.subscribe(this);
 	}
 
 	setUpEventHandlers() {
@@ -109,8 +108,12 @@ class ExpenseController {
 	unsetExpenseEditable(event) {
 		const form = event.currentTarget;
 		const expenseID = form.attributes["data-id"].value;
-		
+
 		this.view.unsetExpenseEditable(expenseID);
+		this.setUpEventHandlers();
+	}
+
+	notify() {
 		this.setUpEventHandlers();
 	}
 }
