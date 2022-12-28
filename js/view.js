@@ -57,10 +57,18 @@ class ExpenseView {
 		`;
 	}
 
-	makeExpenseEditRow(expense) {
+	// Curly braces to get values inside of what is passed as argument.
+	makeExpenseEditRow({description, date, amount, id}) {
 		return  `
 			<div class="expense">
-				Being edited
+				<form class="edit-expense-form" data-id="${id}">
+					<input type="text" name="description" value="${description}">
+					<input type="text" name="description" value="${date}">
+					<input type="text" name="description" value="${amount}">
+
+					<button type="reset">Cancel</button>
+					<button type="submit">Save</button>
+				</form>
 			</div>
 		`;
 	}
