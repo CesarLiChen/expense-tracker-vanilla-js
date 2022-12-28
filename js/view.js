@@ -19,6 +19,7 @@ class ExpenseView {
 		return {
 			deleteButtons: document.getElementsByClassName("delete"),
 			editButtons: document.getElementsByClassName("edit"),
+			editForms: document.getElementsByClassName("edit-expense-form"),
 			expenseForm: document.getElementById("new-expense-form"),
 			expenses: document.getElementById("expenses"),
 		};
@@ -34,6 +35,11 @@ class ExpenseView {
 
 	setExpenseEditable(expenseID) {
 		this.editableExpenses.add(expenseID);
+		this.notify();
+	}
+
+	unsetExpenseEditable(expenseID) {
+		this.editableExpenses.delete(expenseID);
 		this.notify();
 	}
 
@@ -62,6 +68,7 @@ class ExpenseView {
 		return  `
 			<div class="expense">
 				<form class="edit-expense-form" data-id="${id}">
+					<p>${id}</p>;
 					<input type="text" name="description" value="${description}">
 					<input type="text" name="description" value="${date}">
 					<input type="text" name="description" value="${amount}">

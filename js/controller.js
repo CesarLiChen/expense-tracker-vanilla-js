@@ -19,6 +19,7 @@ class ExpenseController {
 		this.addExpense = this.addExpense.bind(this);
 		this.removeExpense = this.removeExpense.bind(this);
 		this.setExpenseEditable = this.setExpenseEditable.bind(this);
+		this.unsetExpenseEditable = this.unsetExpenseEditable.bind(this);
 		
 		console.log(this);
 
@@ -37,6 +38,10 @@ class ExpenseController {
 
 		[...this.DOM.editButtons].forEach( (editButton) => {
 			editButton.addEventListener("click", this.setExpenseEditable);
+		});
+
+		[...this.DOM.editForms].forEach( (editForm) => {
+			editForm.addEventListener("reset", this.unsetExpenseEditable);
 		});
 	}
 
@@ -98,5 +103,14 @@ class ExpenseController {
 		console.log(expenseID + " EDITABLE");
 
 		this.view.setExpenseEditable(expenseID);
+		this.setUpEventHandlers(); // Updates view to get up-to-date html elements.
+	}
+
+	unsetExpenseEditable(event) {
+		const form = event.currentTarget;
+		const expenseID = form.attributes["data-id"].value;
+		
+		this.view.unsetExpenseEditable(expenseID);
+		this.setUpEventHandlers();
 	}
 }
