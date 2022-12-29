@@ -34,6 +34,19 @@ class ExpenseModel {
 		this.notify();
 	}
 
+	editExpense({description, date, amount, id}) {
+		const expense = this.expenses.find( (expense) => {
+			return expense.id === id;
+		});
+
+		expense.description = description;
+		expense.date = date;
+		expense.amount = amount;
+
+		this.db.edit(expense);
+		this.notify();
+	}
+
 	removeExpense(expenseID) {
 		/* Filter loops through array returns every element
 		where a specific function returns TRUE.

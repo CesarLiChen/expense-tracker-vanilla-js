@@ -68,10 +68,9 @@ class ExpenseView {
 		return  `
 			<div class="expense">
 				<form class="edit-expense-form" data-id="${id}">
-					<p>${id}</p>;
 					<input type="text" name="description" value="${description}">
-					<input type="text" name="description" value="${date}">
-					<input type="text" name="description" value="${amount}">
+					<input type="text" name="date" value="${date}">
+					<input type="text" name="amount" value="${amount}">
 
 					<button type="reset">Cancel</button>
 					<button type="submit">Save</button>
