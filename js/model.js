@@ -2,6 +2,9 @@
 	Part of code that handles DATA in our 
 	application. Our data are the expenses.
 */
+class InvalidAmountError extends Error {
+	
+}
 
 class ExpenseModel {
 	constructor(db) {
@@ -27,6 +30,7 @@ class ExpenseModel {
 
 	addExpense(expense) {
 		expense.id = this.generateId();
+		expense.amount = this.validateAmount(expense.amount);
 
 		this.expenses.push(expense);
 		this.db.add(expense);
@@ -41,7 +45,7 @@ class ExpenseModel {
 
 		expense.description = description;
 		expense.date = date;
-		expense.amount = amount;
+		expense.amount = this.validateAmount(amount);
 
 		this.db.edit(expense);
 		this.notify();
@@ -77,5 +81,11 @@ class ExpenseModel {
 		this.subscribers.forEach( (subscriber) => {
 			subscriber.notify();
 		});
+	}
+
+	validateAmount(amount) {
+		if (amount.length === 0) throw new InvalidAmountError();
+
+		return amount;
 	}
 }
