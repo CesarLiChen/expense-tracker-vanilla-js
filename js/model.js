@@ -2,9 +2,8 @@
 	Part of code that handles DATA in our 
 	application. Our data are the expenses.
 */
-class InvalidAmountError extends Error {
-	
-}
+class InvalidAmountError extends Error {}
+class InvalidDateError extends Error {}
 
 class ExpenseModel {
 	constructor(db) {
@@ -30,6 +29,7 @@ class ExpenseModel {
 
 	addExpense(expense) {
 		expense.id = this.generateId();
+		expense.date = this.validateDate(expense.date);
 		expense.amount = this.validateAmount(expense.amount);
 
 		this.expenses.push(expense);
@@ -44,7 +44,7 @@ class ExpenseModel {
 		});
 
 		expense.description = description;
-		expense.date = date;
+		expense.date = this.validateDate(date);
 		expense.amount = this.validateAmount(amount);
 
 		this.db.edit(expense);
@@ -104,5 +104,13 @@ class ExpenseModel {
 		if (cents && cents.length === 1) cents += "0";
 
 		return `${dollars}.${cents}`;
+	}
+
+	validateDate(date) {
+		const matches = date.match(/^\d{4}\-\d{2}\-\d{2}$/);
+
+		if (!matches) throw new InvalidDateError();
+
+		return date;
 	}
 }
