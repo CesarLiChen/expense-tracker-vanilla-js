@@ -111,15 +111,20 @@ class ExpenseController {
 			amount: {value: am}
 		} = form;
 
-		this.model.editExpense({
-			description: desc,
-			date: dat,
-			amount: am,
-			id: id
-		});
+		try {
+			this.model.editExpense({
+				description: desc,
+				date: dat,
+				amount: am,
+				id: id
+			});
 
-		this.view.unsetExpenseEditable(id);
-		this.setUpEventHandlers();
+			this.view.hideErrorMessage();
+			this.view.unsetExpenseEditable(id);
+			this.setUpEventHandlers();
+		} catch(error) {
+			this.view.displayAmountErrorMessage();
+		}
 	}
 
 	removeExpense(event) {
@@ -144,6 +149,7 @@ class ExpenseController {
 		const form = event.currentTarget;
 		const expenseID = form.attributes["data-id"].value;
 
+		this.view.hideErrorMessage();
 		this.view.unsetExpenseEditable(expenseID);
 		this.setUpEventHandlers();
 	}
