@@ -20,6 +20,7 @@ class ExpenseView {
 			deleteButtons: document.getElementsByClassName("delete"),
 			editButtons: document.getElementsByClassName("edit"),
 			editForms: document.getElementsByClassName("edit-expense-form"),
+			errorMsg: document.getElementById("error"),
 			expenseForm: document.getElementById("new-expense-form"),
 			expenses: document.getElementById("expenses"),
 		};
@@ -103,5 +104,15 @@ class ExpenseView {
 				</div>
 			</div>
 		`;
+	}
+
+	displayAmountErrorMessage() {
+		this.DOM.errorMsg.innerText = "Invalid amount!";
+		this.DOM.errorMsg.className = "";
+	}
+
+	hideErrorMessage() {
+		this.DOM.errorMsg.innerText = "";
+		this.DOM.errorMsg.className = "hidden";
 	}
 }

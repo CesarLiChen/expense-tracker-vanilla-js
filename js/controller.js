@@ -84,11 +84,17 @@ class ExpenseController {
 
 		console.log(this);
 
-		this.model.addExpense({
-			description: desc,
-			date: dat,
-			amount: am
-		});
+		try {
+			this.model.addExpense({
+				description: desc,
+				date: dat,
+				amount: am
+			});
+
+			this.view.hideErrorMessage();
+		} catch(error) {
+			this.view.displayAmountErrorMessage();
+		}
 	}
 
 	editExpense(event) {
