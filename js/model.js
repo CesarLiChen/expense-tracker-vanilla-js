@@ -107,10 +107,19 @@ class ExpenseModel {
 	}
 
 	validateDate(date) {
-		const matches = date.match(/^\d{4}\-\d{2}\-\d{2}$/);
+		const matches = date.match(/^\d{4}\-\d{1,2}\-\d{1,2}$/);
 
 		if (!matches) throw new InvalidDateError();
 
-		return date;
+		let [year, month, day] = date.split("-");
+		if (day.length === 1) day = "0" + day;
+		if (month.length === 1) month = "0" + month;
+
+		// parse returns NaN if it is NOT a date but
+		// returns an integer if it IS a date.
+		const timestamp = Date.parse(`${year}-${month}-${day}`); // 2004-04-12
+		if (isNaN(timestamp)) throw new InvalidDateError();
+
+		return [year, month, day].join("-");
 	}
 }
