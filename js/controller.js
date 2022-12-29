@@ -19,6 +19,7 @@ class ExpenseController {
 		this.addExpense = this.addExpense.bind(this);
 		this.editExpense = this.editExpense.bind(this);
 		this.removeExpense = this.removeExpense.bind(this);
+		this.hideErrorMessage = this.hideErrorMessage.bind(this);
 		this.setExpenseEditable = this.setExpenseEditable.bind(this);
 		this.unsetExpenseEditable = this.unsetExpenseEditable.bind(this);
 		
@@ -28,6 +29,7 @@ class ExpenseController {
 
 	setUpEventHandlers() {
 		this.DOM.expenseForm.addEventListener("submit", this.addExpense);
+		this.DOM.expenseForm.addEventListener("reset", this.hideErrorMessage);
 
 		// getElementsByClassName returns a 'node' list
 		// Convert node to array by [... {node list}]
@@ -67,7 +69,7 @@ class ExpenseController {
 		console.log("Gets actual value " + form.description.value);
 		*/
 
-		// ---------------------------------------------------------
+		// ========================================================
 
 		/* 
 			New to ES6, another way to extract
@@ -144,6 +146,10 @@ class ExpenseController {
 
 		this.view.unsetExpenseEditable(expenseID);
 		this.setUpEventHandlers();
+	}
+
+	hideErrorMessage() {
+		this.view.hideErrorMessage();
 	}
 
 	notify() {
